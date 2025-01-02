@@ -17,11 +17,11 @@ public class Connector {
         }
 
         UserDAO dao = new UserDAO();
-        User u1 = new User(1, "Peter Parker", "12345", "test@test");
+//        User u1 = new User(1, "Peter Parker", "12345", "test@test");
+//
+//        dao.insertUser(u1);
 
-        dao.insertUser(u1);
-
-        System.out.println(dao.getUser(u1.getId()));
+        System.out.println(dao.getAllUsers());
     }
 
 //    public void insertUser(User user) {
