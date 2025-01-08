@@ -58,12 +58,12 @@
                 <input type="text" class="form-control" id="inputName" placeholder="Enter your name" name="name" required>
             </div>
             <div class="form-group">
-                <label for="exampleInputEmail1">Email Address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter your email" name="email" required>
+                <label for="inputEmail">Email Address</label>
+                <input type="email" class="form-control" id="inputEmail" placeholder="Enter your email" name="email" required>
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter your password" name="password" required>
+                <label for="inputPassword">Password</label>
+                <input type="password" class="form-control" id="inputPassword" placeholder="Enter your password" name="password" required>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>

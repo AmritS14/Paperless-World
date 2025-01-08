@@ -14,7 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 @WebServlet("/loginProcess")
-public class LoginForm extends HttpServlet {
+public class LoginProcess extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @Override

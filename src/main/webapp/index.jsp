@@ -1,5 +1,15 @@
+<%@ page import="com.document.model.Document" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <html>
+<%
+    if (session.getAttribute("user") != null) {
+        if(request.getAttribute("documentList") == null) {
+            response.sendRedirect("documents");
+            return;
+        }
+%>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -18,7 +28,43 @@
 <%@ include file="navbar.jsp" %>
 
 <div class="content">
-
+    <div class="container mt-4"></div>
+        <h2 class="mb-4">My Documents</h2>
+        <table class="table table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Document Name</th>
+                    <th scope="col">Date Modified</th>
+                    <th scope="col">Size</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach var="doc" items="${documentList}">
+                    <tr>
+                        <td><c:out value="${doc.title}"/></td>
+                        <td><c:out value="${doc.dateModified}"/></td>
+                        <td><c:out value="${doc.size}"/></td>
+                        <td>
+                            <a href="viewDocument?id=<c:out value='${doc.id}'/>" class="btn btn-sm btn-outline-primary mr-2">View</a>
+                            <a href="downloadDocument?id=<c:out value='${doc.id}'/>" class="btn btn-sm btn-outline-secondary">Download</a>
+                        </td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
 </div>
 </body>
+
+<%
+    }
+    else {
+%>
+        <script>
+            alert("Please login first!");
+            window.location.href = "login.jsp";
+        </script>
+<%
+    }
+%>
 </html>

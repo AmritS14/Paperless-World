@@ -8,8 +8,8 @@ import jakarta.servlet.annotation.*;
 import java.io.IOException;
 
 @WebServlet("/registerProcess")
-public class RegisterForm extends HttpServlet {
-    public RegisterForm() {
+public class RegisterProcess extends HttpServlet {
+    public RegisterProcess() {
         super();
     }
     @Override
