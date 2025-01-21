@@ -26,12 +26,25 @@ public class ShareDocumentServlet extends HttpServlet {
             }
 
             DocumentDAO documentDAO = new DocumentDAO();
-            boolean success = documentDAO.shareDocument(documentId, shareWithUsername);
+            int status = documentDAO.shareDocument(documentId, shareWithUsername);
 
-            if (success) {
-                response.sendRedirect("documents?message=Document shared successfully");
-            } else {
-                response.sendRedirect("documents?error=Failed to share document. User not found or already shared.");
+            switch (status) {
+                case 0:
+                    response.sendRedirect("documents?message=Document shared successfully");
+                    break;
+
+                case 1:
+                    response.sendRedirect("documents?error=User not found!");
+                    break;
+
+                case 2:
+                    response.sendRedirect("documents?error=Document is already shared with this user");
+                    break;
+
+                case 3:
+                default:
+                    response.sendRedirect("documents?error=Unknown error!");
+                    break;
             }
         } catch (NumberFormatException e) {
             response.sendRedirect("documents?error=Invalid document ID");

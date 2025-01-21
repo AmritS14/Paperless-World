@@ -178,7 +178,31 @@ public class DocumentDAO {
         return documents;
     }
 
-    public boolean shareDocument(int documentId, String shareWithUsername) {
+    public boolean isSharedWithUser(int documentId, String userName) {
+        String query = "SELECT * FROM shared s JOIN users u ON s.userId=u.userId WHERE s.documentId = ? and u.name = ?";
+
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setInt(1, documentId);
+            ps.setString(2, userName);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return true;
+            }
+            return false;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int shareDocument(int documentId, String shareWithUsername) {
+        if (isSharedWithUser(documentId, shareWithUsername)) {
+            return 2;
+        }
+
         String query = "INSERT INTO shared (documentId, userId) " +
                       "SELECT ?, userId FROM users WHERE name = ?";
 
@@ -189,15 +213,18 @@ public class DocumentDAO {
             ps.setString(2, shareWithUsername);
             
             int rowsAffected = ps.executeUpdate();
-            return rowsAffected > 0;
+            if (rowsAffected > 0)
+                return 0;
+            else
+                return 1;
             
         } catch (SQLIntegrityConstraintViolationException e) {
             // Document is already shared with this user
             System.out.println("Document is already shared with this user");
-            return false;
+            return 2;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return 3;
         }
     }
 }
