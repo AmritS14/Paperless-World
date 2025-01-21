@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 import com.document.model.*;
 import jakarta.servlet.*;
@@ -18,42 +20,28 @@ public class DownloadDocumentServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        // Get document ID from request
-        int id = Integer.parseInt(request.getParameter("id"));
-
-        // Get document from database using id
-        DocumentDAO documentDAO = new DocumentDAO();
-        Document document = documentDAO.getDocumentById(id);
-        
-        if (document == null) {
-            System.out.println("Document not found with id: " + id);
-            response.sendRedirect("error.jsp");
-            return;
-        }
-        
-        String fileName = document.getFileName();
-        
         try {
-            // Get the webapp directory path using ServletContext
-            String webappPath = null;
-            try {
-                webappPath = getServletContext().getRealPath("/");
-                System.err.println("Debug - Webapp Path: " + webappPath);
-            } catch (Exception e) {
-                e.printStackTrace();
-                System.err.println("Error getting webapp path: " + e.getMessage());
+            // Get document ID from request
+            int id = Integer.parseInt(request.getParameter("id"));
+
+            // Get document from database using id
+            DocumentDAO documentDAO = new DocumentDAO();
+            Document document = documentDAO.getDocumentById(id);
+            
+            if (document == null) {
+                System.out.println("Document not found with id: " + id);
+                response.sendRedirect("documents?error=" + URLEncoder.encode("Document not found", StandardCharsets.UTF_8));
+                return;
             }
             
+            String fileName = document.getFileName();
+            
+            // Get the webapp directory path using ServletContext
+            String webappPath = getServletContext().getRealPath("/");
             String docsPath = webappPath + "docs" + File.separator;
             File file = new File(docsPath + fileName);
             
-            System.err.println("==== DEBUG OUTPUT START ====");
-            System.err.println("Debug - File details:");
-            System.err.println("Webapp Path: " + (webappPath != null ? webappPath : "null"));
-            System.err.println("Docs Path: " + docsPath);
-            System.err.println("Full file path: " + file.getAbsolutePath());
-            System.err.println("File exists: " + file.exists());
-            System.err.println("==== DEBUG OUTPUT END ====");
+            System.out.println("Debug - File path: " + file.getAbsolutePath());
             
             if (file.exists()) {
                 // Set response headers
@@ -73,14 +61,17 @@ public class DownloadDocumentServlet extends HttpServlet {
                     out.flush();
                 }
             } else {
-                System.out.println("File not found: " + file.getAbsolutePath());
-                response.sendRedirect("error.jsp");
+                String errorMessage = "File not found: " + fileName;
+                System.out.println("Error: " + errorMessage);
+                response.sendRedirect("documents?error=" + URLEncoder.encode(errorMessage, StandardCharsets.UTF_8));
             }
             
+        } catch (NumberFormatException e) {
+            response.sendRedirect("documents?error=" + URLEncoder.encode("Invalid document ID", StandardCharsets.UTF_8));
         } catch (Exception e) {
             System.out.println("Error downloading file: " + e.getMessage());
             e.printStackTrace();
-            response.sendRedirect("error.jsp");
+            response.sendRedirect("documents?error=" + URLEncoder.encode("Error downloading file: " + e.getMessage(), StandardCharsets.UTF_8));
         }
     }
 } 

@@ -45,9 +45,15 @@ public class UploadDocumentServlet extends HttpServlet {
                 return;
             }
 
-            // Generate unique file name
-            String uniqueFileName = UUID.randomUUID().toString() + "." + fileExtension;
-            String filePath = uploadPath + File.separator + uniqueFileName;
+            String filePath = uploadPath + File.separator + fileName;
+            System.out.println(filePath);
+            System.out.println(new File(filePath).exists());
+
+            if (new File(filePath).exists()) {
+                request.setAttribute("error", "File already exists");
+                request.getRequestDispatcher("addDocument.jsp").forward(request, response);
+                return;
+            }
 
             // Save the file
             filePart.write(filePath);
@@ -65,7 +71,7 @@ public class UploadDocumentServlet extends HttpServlet {
                 request.getParameter("title"),
                 request.getSession().getAttribute("user").toString(),
                 formattedSize,
-                uniqueFileName,
+                fileName,
                 currentDateTime,
                 currentDateTime,
                 fileExtension.toUpperCase()

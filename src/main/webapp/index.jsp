@@ -28,8 +28,40 @@
 <%@ include file="navbar.jsp" %>
 
 <div class="content">
-    <div class="container mt-4"></div>
-        <h2 class="mb-4">My Documents</h2>
+    
+        <%-- Handle error from request attribute --%>
+        <% if (request.getAttribute("error") != null) { %>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <%= request.getAttribute("error") %>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <% } %>
+
+        <%-- Handle error from URL parameter --%>
+        <% if (request.getParameter("error") != null) { %>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <%= request.getParameter("error") %>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <% } %>
+
+        <%-- Handle success message --%>
+        <% if (request.getParameter("message") != null) { %>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <%= request.getParameter("message") %>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        <% } %>
+        <div class="container mt-4"></div>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>My Documents</h2>
+        </div>
         <table class="table table-hover">
             <thead class="thead-light">
                 <tr>

@@ -11,12 +11,12 @@
     <div class="container mt-5">
         <div class="card">
             <div class="card-header">
-                <h3>Document Details</h3>
+                <h3><c:out value="${document.title}"/></h3>
             </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-8">
-                        <h4><c:out value="${document.title}"/></h4>
+                        <h4>Document details: </h4>
                         <p><strong>Author:</strong> <c:out value="${document.author}"/></p>
                         <p><strong>File Name:</strong> <c:out value="${document.fileName}"/></p>
                         <p><strong>Size:</strong> <c:out value="${document.size}"/></p>
