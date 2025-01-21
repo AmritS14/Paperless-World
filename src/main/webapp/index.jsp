@@ -117,7 +117,7 @@
                     <div class="btn-group" role="group">
                         <a href="viewDocument?id=<c:out value='${doc.id}'/>" class="btn btn-sm btn-outline-primary">View</a>
                         <a href="downloadDocument?id=<c:out value='${doc.id}'/>" class="btn btn-sm btn-outline-secondary">Download</a>
-                        <a href="removeDocument?id=<c:out value='${doc.id}'/>" class="btn btn-sm btn-outline-danger">Remove</a>
+                        <a href="removeSharedDocument?id=<c:out value='${doc.id}'/>" class="btn btn-sm btn-outline-danger">Remove</a>
                     </div>
                 </td>
             </tr>
