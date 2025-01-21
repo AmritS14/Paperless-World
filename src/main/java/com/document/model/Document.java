@@ -5,22 +5,24 @@ public class Document {
     private String title;
     private String author;
     private String size;
-    private String filename;
+    private String fileName;
     private String dateCreated;
     private String dateModified;
+    private String type;
 
     public Document(String title, String author) {
         this.title = title;
         this.author = author;
     }
 
-    public Document(String title, String author, String size, String filename, String dateCreated, String dateModified) {
+    public Document(String title, String author, String size, String fileName, String dateCreated, String dateModified, String type) {
         this.title = title;
         this.author = author;
         this.size = size;
-        this.filename = filename;
+        this.fileName = fileName;
         this.dateCreated = dateCreated;
         this.dateModified = dateModified;
+        this.type = type;
     }
 
     public int getId() {
@@ -55,12 +57,12 @@ public class Document {
         this.size = size;
     }
 
-    public String getFilename() {
-        return filename;
+    public String getFileName() {
+        return fileName;
     }
 
-    public void setFilename(String filename) {
-        this.filename = filename;
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
     public String getDateCreated() {
@@ -77,5 +79,13 @@ public class Document {
 
     public void setDateModified(String dateModified) {
         this.dateModified = dateModified;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

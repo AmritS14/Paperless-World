@@ -1,6 +1,12 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="index.jsp">Paperless World</a>
+        <a class="navbar-brand" <% if (session.getAttribute("user") != null) {%>href="index.jsp"<%} else {%> href="#" onclick="login()"<%}%>>Paperless World</a>
+        <script>
+            function login(){
+                alert("Please login first!");
+                window.location.href = "login.jsp";
+            }
+        </script>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>

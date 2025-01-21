@@ -16,16 +16,20 @@ public class DocumentListServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
+        String username = (String) request.getSession().getAttribute("user");
+        int userId = (int) request.getSession().getAttribute("userId");
+        
         DocumentDAO documentDAO = new DocumentDAO();
-        List<Document> documents = documentDAO.getALlDocuments();
+        List<Document> documents = documentDAO.getAllDocuments(userId);
+        List<Document> sharedDocuments = documentDAO.getSharedDocuments(userId);
         
         // Debug print
-        System.out.println("Number of documents: " + documents.size());
-        for (Document doc : documents) {
-            System.out.println("Document: " + doc.getTitle());
-        }
+        System.out.println("User: " + username);
+        System.out.println("Number of owned documents: " + documents.size());
+        System.out.println("Number of shared documents: " + sharedDocuments.size());
         
-        request.setAttribute("documentList", documents);  // Changed attribute name
+        request.setAttribute("documentList", documents);
+        request.setAttribute("sharedDocumentList", sharedDocuments);
         request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 } 

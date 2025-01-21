@@ -24,6 +24,7 @@ public class LoginProcess extends HttpServlet {
 
         boolean isAuthenticated = false;
         String name = "";
+        int id = 0;
 
         try {
             // Database connection
@@ -40,6 +41,7 @@ public class LoginProcess extends HttpServlet {
             if (resultSet.next()) {
                 isAuthenticated = true;
                 name = resultSet.getString("name");
+                id = resultSet.getInt("userId");
             }
 
             resultSet.close();
@@ -55,6 +57,7 @@ public class LoginProcess extends HttpServlet {
             // Successful login
             HttpSession session = request.getSession();
             session.setAttribute("user", name);
+            session.setAttribute("userId", id);
             response.sendRedirect("index.jsp"); // Redirect to dashboard or another page
         } else {
             // Unsuccessful login

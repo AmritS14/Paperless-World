@@ -6,7 +6,7 @@
     
     <display-name>Paperless World</display-name>
     
-    <welcome-file-list>
-        <welcome-file>documents</welcome-file>
-    </welcome-file-list>
+<!--    <welcome-file-list>-->
+<!--        <welcome-file>documents</welcome-file>-->
+<!--    </welcome-file-list>-->
 </web-app>

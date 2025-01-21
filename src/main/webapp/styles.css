@@ -73,3 +73,16 @@ section h1 {
     font-size: 2rem;
     margin-bottom: 1rem;
 }
+
+.btn-group {
+    display: flex;
+    gap: 4px;
+}
+
+.btn-group .btn {
+    border-radius: 4px !important;
+}
+
+.table td {
+    vertical-align: middle;
+}
